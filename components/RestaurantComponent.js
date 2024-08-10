@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ReviewList from './ReviewList'
-import MapRes from './Map'
+import MapRes from './Map/Map'
 import { supabase } from '@/lib/supabase'
 
 export default function RestaurantComponent({data, setSelected}) {
@@ -19,17 +19,14 @@ export default function RestaurantComponent({data, setSelected}) {
 
 
 
+
+
   useEffect(() =>{
     getReviews()
-  },[])
 
-
-
-
-  useEffect(() =>{
-    supabase
+  supabase
   .channel('Review')
-  .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'todos' }, getReviews())
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'Review' }, getReviews())
   .subscribe()
   },[])
 

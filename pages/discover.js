@@ -18,7 +18,10 @@ export default function Discover() {
     useEffect(() =>{
 
         fetchData()
-
+        supabase
+  .channel('Restaurant')
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'Restaurant'}, fetchData())
+  .subscribe()
     }, [])
 
     // console.log(resData)
